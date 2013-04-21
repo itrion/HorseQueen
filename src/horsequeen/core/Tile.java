@@ -14,7 +14,7 @@ public class Tile extends Observable{
         return isEmpty;
     }
 
-    public void putOccupant(Chip occupant) {
+    public void putChip(Chip occupant) {
         this.occupant = occupant;
         this.isEmpty = false;
         setChanged();

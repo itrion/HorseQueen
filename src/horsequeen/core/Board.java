@@ -17,7 +17,7 @@ public class Board {
     }
 
     public void putChip(Chip chip, int row, int column) {
-        tiles.get(getIndexOfTileIn(row, column)).putOccupant(chip);
+        tiles.get(getIndexOfTileIn(row, column)).putChip(chip);
     }
 
     public boolean isTileEmpty(int row, int column) {
@@ -78,5 +78,13 @@ public class Board {
     public void initializeBoard(Queen playerOneQueen, Queen playerTwoQueen) {
         putChip(playerOneQueen, getFirstRow(), getMiddleColumn() - 1);
         putChip(playerTwoQueen, getLastRow(), getMiddleColumn());
+    }
+
+    public int getRow(Tile origin) {
+        return tiles.indexOf(origin) / columns;
+    }
+
+    public int getColumn(Tile origin) {
+        return tiles.lastIndexOf(origin) - getRow(origin) * columns;
     }
 }

@@ -1,8 +1,6 @@
 package horsequeen.view;
 
 import horsequeen.core.Chip;
-import horsequeen.core.Horse;
-import horsequeen.core.Queen;
 import horsequeen.core.Tile;
 import horsequeen.core.TileSelectedListener;
 import java.awt.Color;
@@ -11,7 +9,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Observable;
 import java.util.Observer;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
@@ -47,9 +44,13 @@ public class TileViewer extends JPanel implements Observer, MouseListener {
     @Override
     public void update(Observable o, Object arg) {
         Chip chip = (Chip) arg;
-        if (chip == null) return;
-        ChipViewer chipViewer = ChipViewerFactory.getChipViewer(chip);
-        add(chipViewer.update());
+        if (chip == null) removeAll();
+        else {
+            ChipViewer chipViewer = ChipViewerFactory.getChipViewer(chip);
+            add(chipViewer.update());
+        }
+        revalidate();
+        repaint();
     }
 
     @Override

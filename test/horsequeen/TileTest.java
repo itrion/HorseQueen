@@ -18,20 +18,20 @@ public class TileTest {
     @Test
     public void testTileWithQueen(){
         Tile tile = new Tile();
-        tile.putOccupant(getQueen());
+        tile.putChip(getQueen());
         Assert.assertFalse(tile.isEmpty());
     }
     
     @Test
     public void testTileWithHorse(){
         Tile tile = new Tile();
-        tile.putOccupant(new Horse(getQueen()));
+        tile.putChip(new Horse(getQueen()));
         Assert.assertFalse(tile.isEmpty());
     }
     @Test
     public void testClearTile(){
         Tile tile = new Tile();
-        tile.putOccupant(new Horse(getQueen()));
+        tile.putChip(new Horse(getQueen()));
         Assert.assertFalse(tile.isEmpty());
         tile.clear();
         Assert.assertTrue(tile.isEmpty());
