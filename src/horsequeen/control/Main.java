@@ -3,14 +3,17 @@ package horsequeen.control;
 import horsequeen.core.Board;
 import horsequeen.core.Game;
 import horsequeen.core.Player;
+import horsequeen.core.Queen;
 import horsequeen.core.Tile;
-import horsequeen.view.HorseQueenViewer;
+import horsequeen.view.BoardViewer;
 import horsequeen.view.TileViewer;
 
 public class Main {
 
     private final int ROWS = 8;
     private final int COLUMNS = 8;
+    private final int QUEEN_BABIES = 5;
+    
 
     public static void main(String... args) {
         Main main = new Main();
@@ -18,20 +21,18 @@ public class Main {
     }
 
     private void init() {
-        Player ivory = new Player("ivory");
-        Player cigar = new Player("cigar");
+        Player playerOne = new Player("ivory");
+        Player playerTwo = new Player("cigar");
+        Queen ivoryQueen = new Queen(playerOne, QUEEN_BABIES);
+        Queen cigarQueen = new Queen(playerTwo, QUEEN_BABIES);
         Board board = new Board(ROWS, COLUMNS);
-        Game game = new Game(ivory, cigar, board);
+        board.initializeBoard(ivoryQueen, cigarQueen);
+        Game game = new Game(playerOne, playerTwo, board);
+
+        BoardViewer horseQueenViewer = new BoardViewer(board.getRows(), board.getColumns());
+        for (Tile boardTile : board.getTiles())
+            horseQueenViewer.add(new TileViewer(boardTile, game));
         
-        HorseQueenViewer horseQueenViewer = new HorseQueenViewer(board.getRows(), board.getColumns());
-        for (Tile boardTile : board.getTiles()) {
-            TileViewer tileViewer = new TileViewer(boardTile);
-            tileViewer.setTileSelectedListener(game);
-            horseQueenViewer.add(tileViewer);
-        }
-        horseQueenViewer.setVisible(true);
         horseQueenViewer.pack();
-        game.initializeGame();
-        game.play();
     }
 }

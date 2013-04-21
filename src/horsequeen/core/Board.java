@@ -13,22 +13,15 @@ public class Board {
         this.rows = rows;
         this.columns = columns;
         this.numberOfTiles = columns * rows;
-        this.tiles = createTiles();
+        initTiles();
     }
 
-    public void putOccupant(Chip occupant, int row, int column) {
-        tiles.get(getIndexOfTileIn(row, column)).putOccupant(occupant);
+    public void putChip(Chip chip, int row, int column) {
+        tiles.get(getIndexOfTileIn(row, column)).putOccupant(chip);
     }
-    
-    public boolean isEmpty(int row, int column){
+
+    public boolean isTileEmpty(int row, int column) {
         return tiles.get(getIndexOfTileIn(row, column)).isEmpty();
-    }
-    public int getRows() {
-        return rows;
-    }
-
-    public int getColumns() {
-        return columns;
     }
 
     public int getNumberOfTiles() {
@@ -39,15 +32,51 @@ public class Board {
         return tiles;
     }
 
-    private ArrayList<Tile> createTiles() {
-        ArrayList<Tile> tileList = new ArrayList<>();
-        for (int i = 0; i < numberOfTiles; i++) {
-            tileList.add(new Tile());
-        }
-        return tileList;
+    private void initTiles() {
+        tiles = new ArrayList<>();
+        for (int i = 0; i < numberOfTiles; i++)
+            tiles.add(new Tile());
     }
 
     public int getIndexOfTileIn(int row, int column) {
         return row * columns + column;
+    }
+
+    public int getFirstRow() {
+        return 0;
+    }
+
+    public int getLastRow() {
+        return rows - 1;
+    }
+    
+    public int getFirstColumn() {
+        return 0;
+    }
+
+    public int getLastColumn() {
+        return columns - 1;
+    }
+    
+
+    public int getMiddleRow() {
+        return rows / 2;
+    }
+
+    public int getMiddleColumn() {
+        return columns / 2;
+    }
+
+    public int getRows() {
+        return rows;
+    }
+
+    public int getColumns() {
+        return columns;
+    }
+
+    public void initializeBoard(Queen playerOneQueen, Queen playerTwoQueen) {
+        putChip(playerOneQueen, getFirstRow(), getMiddleColumn() - 1);
+        putChip(playerTwoQueen, getLastRow(), getMiddleColumn());
     }
 }

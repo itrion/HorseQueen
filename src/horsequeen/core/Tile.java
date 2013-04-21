@@ -10,14 +10,6 @@ public class Tile extends Observable{
         this.isEmpty = true;
     }
 
-    public boolean hasHorse() {
-        return (occupant instanceof Horse);
-    }
-
-    public boolean hasQueen() {
-        return (occupant instanceof Queen);
-    }
-
     public boolean isEmpty() {
         return isEmpty;
     }

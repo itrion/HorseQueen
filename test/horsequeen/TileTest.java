@@ -12,8 +12,6 @@ public class TileTest {
     @Test
     public void testEmptyTile(){
         Tile tile = new Tile();
-        Assert.assertFalse(tile.hasHorse());
-        Assert.assertFalse(tile.hasQueen());
         Assert.assertTrue(tile.isEmpty());
     }
     
@@ -21,8 +19,6 @@ public class TileTest {
     public void testTileWithQueen(){
         Tile tile = new Tile();
         tile.putOccupant(getQueen());
-        Assert.assertFalse(tile.hasHorse());
-        Assert.assertTrue(tile.hasQueen());
         Assert.assertFalse(tile.isEmpty());
     }
     
@@ -30,20 +26,14 @@ public class TileTest {
     public void testTileWithHorse(){
         Tile tile = new Tile();
         tile.putOccupant(new Horse(getQueen()));
-        Assert.assertTrue(tile.hasHorse());
-        Assert.assertFalse(tile.hasQueen());
         Assert.assertFalse(tile.isEmpty());
     }
     @Test
     public void testClearTile(){
         Tile tile = new Tile();
         tile.putOccupant(new Horse(getQueen()));
-        Assert.assertTrue(tile.hasHorse());
-        Assert.assertFalse(tile.hasQueen());
         Assert.assertFalse(tile.isEmpty());
         tile.clear();
-        Assert.assertFalse(tile.hasHorse());
-        Assert.assertFalse(tile.hasQueen());
         Assert.assertTrue(tile.isEmpty());
     }
 

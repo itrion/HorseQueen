@@ -36,8 +36,8 @@ public class BoardTest {
     @Test
     public void testPutOccupant() {
         Board board = getBoard();
-        board.putOccupant(new Queen(new Player("mock"), 5), 0, 0);
-        Assert.assertFalse(board.isEmpty(0, 0));
+        board.putChip(new Queen(new Player("mock"), 5), 0, 0);
+        Assert.assertFalse(board.isTileEmpty(0, 0));
     }
 
     private Board getBoard() {

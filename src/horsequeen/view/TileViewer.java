@@ -20,22 +20,20 @@ public class TileViewer extends JPanel implements Observer, MouseListener {
     private static final int DEFAULT_WIDTH = 50;
     private static final int DEFAULT_HEIGHT = 50;
     private TileSelectedListener tileSelectedListener;
-    private JLabel text;
     private final Tile tile;
 
-    public TileViewer(Tile tile) {
+    public TileViewer(Tile tile, TileSelectedListener tileSelectedListener) {
         this.tile = tile;
+        this.tileSelectedListener = tileSelectedListener;
         configurePanel();
     }
 
     private void configurePanel() {
         tile.addObserver(this);
-        text = new JLabel();
         addMouseListener(this);
         setPreferredSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
         setBackground(Color.WHITE);
         setBorder(new LineBorder(Color.black));
-        add(text);
     }
 
     public Dimension getTileSize() {
@@ -46,20 +44,12 @@ public class TileViewer extends JPanel implements Observer, MouseListener {
         setPreferredSize(tileSize);
     }
 
-    public void setTileSelectedListener(TileSelectedListener tileSelectedListener) {
-        this.tileSelectedListener = tileSelectedListener;
-    }
-
     @Override
     public void update(Observable o, Object arg) {
-        //TODO create the chipviewer or somethig to draw the tile
-        Chip occupant = (Chip) arg;
-        if (occupant instanceof Queen)
-            text.setText("Q");
-        else if (occupant instanceof Horse)
-            text.setText("M");
-        else
-            text.setText("");
+        Chip chip = (Chip) arg;
+        if (chip == null) return;
+        ChipViewer chipViewer = ChipViewerFactory.getChipViewer(chip);
+        add(chipViewer.update());
     }
 
     @Override
