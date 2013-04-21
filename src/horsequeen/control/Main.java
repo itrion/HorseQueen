@@ -6,7 +6,6 @@ import horsequeen.core.Player;
 import horsequeen.core.Tile;
 import horsequeen.view.HorseQueenViewer;
 import horsequeen.view.TileViewer;
-import java.util.ArrayList;
 
 public class Main {
 
@@ -22,15 +21,17 @@ public class Main {
         Player ivory = new Player("ivory");
         Player cigar = new Player("cigar");
         Board board = new Board(ROWS, COLUMNS);
-
         Game game = new Game(ivory, cigar, board);
-        HorseQueenViewer horseQueenViewer = new HorseQueenViewer(board);
+        
+        HorseQueenViewer horseQueenViewer = new HorseQueenViewer(board.getRows(), board.getColumns());
         for (Tile boardTile : board.getTiles()) {
             TileViewer tileViewer = new TileViewer(boardTile);
-            boardTile.addObserver(tileViewer);
+            tileViewer.setTileSelectedListener(game);
             horseQueenViewer.add(tileViewer);
         }
         horseQueenViewer.setVisible(true);
         horseQueenViewer.pack();
+        game.initializeGame();
+        game.play();
     }
 }

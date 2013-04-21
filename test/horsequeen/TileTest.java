@@ -19,9 +19,8 @@ public class TileTest {
     
     @Test
     public void testTileWithQueen(){
-        int babies = 5;
         Tile tile = new Tile();
-        tile.putOccupant(new Queen(getPlayer(),babies));
+        tile.putOccupant(getQueen());
         Assert.assertFalse(tile.hasHorse());
         Assert.assertTrue(tile.hasQueen());
         Assert.assertFalse(tile.isEmpty());
@@ -30,7 +29,7 @@ public class TileTest {
     @Test
     public void testTileWithHorse(){
         Tile tile = new Tile();
-        tile.putOccupant(new Horse(getPlayer()));
+        tile.putOccupant(new Horse(getQueen()));
         Assert.assertTrue(tile.hasHorse());
         Assert.assertFalse(tile.hasQueen());
         Assert.assertFalse(tile.isEmpty());
@@ -38,7 +37,7 @@ public class TileTest {
     @Test
     public void testClearTile(){
         Tile tile = new Tile();
-        tile.putOccupant(new Horse(getPlayer()));
+        tile.putOccupant(new Horse(getQueen()));
         Assert.assertTrue(tile.hasHorse());
         Assert.assertFalse(tile.hasQueen());
         Assert.assertFalse(tile.isEmpty());
@@ -48,7 +47,7 @@ public class TileTest {
         Assert.assertTrue(tile.isEmpty());
     }
 
-    private Player getPlayer() {
-        return new Player("mock");
+    private Queen getQueen() {
+        return new Queen(new Player("mock"),5);
     }
 }
