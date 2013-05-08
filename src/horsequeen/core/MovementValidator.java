@@ -5,7 +5,7 @@ public class MovementValidator {
     private Board board;
     private Tile origin;
     private Tile target;
-    private Player currentTurnPlayer;
+    private HorseQueenPlayer currentTurnPlayer;
     private final int originRow;
     private final int originColumn;
     private final int targetRow;
@@ -23,11 +23,12 @@ public class MovementValidator {
     }
 
     public boolean validate() {
-        if (!allowedMovement()) return false;
+        return true;
+        /*if (!allowedMovement()) return false;
         if (origin.getOccupant() instanceof Queen)
             return checkQueenRules();
         else
-            return checkHorseRules();
+            return checkHorseRules();*/
     }
 
     private boolean checkQueenRules() {

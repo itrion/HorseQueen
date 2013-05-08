@@ -2,7 +2,7 @@ package horsequeen.control;
 
 import horsequeen.core.Board;
 import horsequeen.core.Game;
-import horsequeen.core.Player;
+import horsequeen.core.HorseQueenPlayer;
 import horsequeen.core.Queen;
 import horsequeen.core.Tile;
 import horsequeen.view.BoardViewer;
@@ -20,8 +20,8 @@ public class Main {
     }
 
     private void init() {
-        Player playerOne = new Player("ivory");
-        Player playerTwo = new Player("cigar");
+        HorseQueenPlayer playerOne = new HorseQueenPlayer("ivory");
+        HorseQueenPlayer playerTwo = new HorseQueenPlayer("cigar");
         Queen ivoryQueen = new Queen(playerOne, QUEEN_BABIES);
         Queen cigarQueen = new Queen(playerTwo, QUEEN_BABIES);
         Board board = new Board(ROWS, COLUMNS);

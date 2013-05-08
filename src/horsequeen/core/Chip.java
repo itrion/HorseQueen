@@ -2,13 +2,13 @@ package horsequeen.core;
 
 public abstract class Chip {
 
-    private Player owner;
+    private HorseQueenPlayer owner;
 
-    protected Chip(Player owner) {
+    protected Chip(HorseQueenPlayer owner) {
         this.owner = owner;
     }
 
-    public Player getOwner() {
+    public HorseQueenPlayer getOwner() {
         return owner;
     }
 }

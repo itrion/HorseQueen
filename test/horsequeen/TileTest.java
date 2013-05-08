@@ -1,7 +1,7 @@
 package horsequeen;
 
 import horsequeen.core.Horse;
-import horsequeen.core.Player;
+import horsequeen.core.HorseQueenPlayer;
 import horsequeen.core.Queen;
 import horsequeen.core.Tile;
 import org.junit.Assert;
@@ -38,6 +38,6 @@ public class TileTest {
     }
 
     private Queen getQueen() {
-        return new Queen(new Player("mock"),5);
+        return new Queen(new HorseQueenPlayer("mock"),5);
     }
 }

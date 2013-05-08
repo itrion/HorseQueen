@@ -2,14 +2,14 @@ package horsequeen.core;
 
 public class Game implements TileSelectedListener {
 
-    private Player[] players;
+    private HorseQueenPlayer[] players;
     private Tile origin;
     private Tile target;
     private int playerTurnIndicator;
     private Board board;
 
-    public Game(Player playerOne, Player playerTwo, Board board) {
-        this.players = new Player[]{playerOne, playerTwo};
+    public Game(HorseQueenPlayer playerOne, HorseQueenPlayer playerTwo, Board board) {
+        this.players = new HorseQueenPlayer[]{playerOne, playerTwo};
         this.playerTurnIndicator = 0;
         this.board = board;
     }
@@ -53,11 +53,11 @@ public class Game implements TileSelectedListener {
         playerTurnIndicator = (playerTurnIndicator + 1) % 2;
     }
 
-    public Player getPlayerOne() {
+    public HorseQueenPlayer getPlayerOne() {
         return players[0];
     }
 
-    public Player getPlayerTwo() {
+    public HorseQueenPlayer getPlayerTwo() {
         return players[1];
     }
 
@@ -78,5 +78,9 @@ public class Game implements TileSelectedListener {
         if (!target.isEmpty()) target.clear();
         target.putChip(origin.getOccupant());
         origin.clear();
+    }
+
+    public void executeMovement(Movement movement) {
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 }

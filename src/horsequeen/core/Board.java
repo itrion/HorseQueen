@@ -3,6 +3,7 @@ package horsequeen.core;
 import java.util.ArrayList;
 
 public class Board {
+    //TODO improve the board: use only the busy tiles to represent the board
 
     private int rows;
     private int columns;
@@ -49,7 +50,7 @@ public class Board {
     public int getLastRow() {
         return rows - 1;
     }
-    
+
     public int getFirstColumn() {
         return 0;
     }
@@ -57,7 +58,6 @@ public class Board {
     public int getLastColumn() {
         return columns - 1;
     }
-    
 
     public int getMiddleRow() {
         return rows / 2;

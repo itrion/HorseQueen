@@ -4,7 +4,7 @@ public class Queen extends Chip {
 
     private int remainingBabies;
 
-    public Queen(Player owner, int remainingBabies) {
+    public Queen(HorseQueenPlayer owner, int remainingBabies) {
         super(owner);
         this.remainingBabies = remainingBabies;
     }
