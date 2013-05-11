@@ -6,15 +6,16 @@ import horsequeen.core.Queen;
 import horsequeen.core.Tile;
 import junit.framework.Assert;
 import org.junit.Test;
+import static org.mockito.Mockito.*;
 
 public class BoardTest {
 
     @Test
     public void testNumberOfTiles() {
         Board board = getBoard();
-        Assert.assertEquals(64, board.getNumberOfTiles());
         Assert.assertEquals(8, board.getRows());
         Assert.assertEquals(8, board.getColumns());
+        Assert.assertEquals(64, board.getNumberOfTiles());
     }
 
     @Test
@@ -36,11 +37,17 @@ public class BoardTest {
     @Test
     public void testPutOccupant() {
         Board board = getBoard();
-        board.putChip(new Queen(new HorseQueenPlayer("mock"), 5), 0, 0);
+        board.putChip(getMockedPlayer().getQueen(), 0, 0);
         Assert.assertFalse(board.isTileEmpty(0, 0));
     }
 
     private Board getBoard() {
         return new Board(8, 8);
+    }
+
+    private HorseQueenPlayer getMockedPlayer() {
+        HorseQueenPlayer mockedPlayer = mock(HorseQueenPlayer.class);
+        when(mockedPlayer.getQueen()).thenReturn(new Queen(mockedPlayer));
+        return mockedPlayer;
     }
 }

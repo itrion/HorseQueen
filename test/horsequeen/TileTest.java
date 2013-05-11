@@ -38,6 +38,6 @@ public class TileTest {
     }
 
     private Queen getQueen() {
-        return new Queen(new HorseQueenPlayer("mock"),5);
+        return new Queen(new HorseQueenPlayer("mock"));
     }
 }

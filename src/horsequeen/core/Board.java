@@ -13,6 +13,11 @@ public class Board {
     public Board(int rows, int columns) {
         this.rows = rows;
         this.columns = columns;
+    }
+
+    public void configureBoardSize(int rows, int columns) {
+        this.rows = rows;
+        this.columns = columns;
         this.numberOfTiles = columns * rows;
         initTiles();
     }
