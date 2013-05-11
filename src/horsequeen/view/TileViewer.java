@@ -19,9 +19,8 @@ public class TileViewer extends JPanel implements Observer, MouseListener {
     private TileSelectedListener tileSelectedListener;
     private final Tile tile;
 
-    public TileViewer(Tile tile, TileSelectedListener tileSelectedListener) {
+    public TileViewer(Tile tile) {
         this.tile = tile;
-        this.tileSelectedListener = tileSelectedListener;
         configurePanel();
     }
 

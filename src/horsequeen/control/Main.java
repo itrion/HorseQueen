@@ -4,7 +4,9 @@ import horsequeen.core.Board;
 import horsequeen.core.Game;
 import horsequeen.core.HorseQueenPlayer;
 import horsequeen.core.Queen;
+import horsequeen.core.Tile;
 import horsequeen.view.BoardViewer;
+import horsequeen.view.TileViewer;
 
 public class Main {
 
@@ -24,7 +26,8 @@ public class Main {
         Board board = new Board(ROWS, COLUMNS);
         Game game = new Game(playerOne, playerTwo, board);
         BoardViewer boardViewer = new BoardViewer(board.getRows(), board.getColumns());
-
+        for (Tile boardTile : board.getTiles())
+            boardViewer.add(new TileViewer(boardTile));
         board.initializeBoard(ivoryQueen, cigarQueen);
         boardViewer.pack();
     }

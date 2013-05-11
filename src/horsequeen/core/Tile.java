@@ -1,7 +1,7 @@
 package horsequeen.core;
 import java.util.Observable;
 
-public class Tile extends Observable{
+public class Tile extends Observable implements ChipPlace{
 
     private boolean isEmpty;
     private Chip occupant;
@@ -10,10 +10,12 @@ public class Tile extends Observable{
         this.isEmpty = true;
     }
 
+    @Override
     public boolean isEmpty() {
         return isEmpty;
     }
 
+    @Override
     public void putChip(Chip occupant) {
         this.occupant = occupant;
         this.isEmpty = false;
@@ -21,14 +23,16 @@ public class Tile extends Observable{
         notifyObservers(occupant);
     }
 
-    public Chip getOccupant() {
+    @Override
+    public Chip getChip() {
         return occupant;
     }
 
-    public void clear() {
-        setChanged();
-        notifyObservers();
+    @Override
+    public void cleanPlace() {
         this.occupant = null;
         this.isEmpty = true;
+        setChanged();
+        notifyObservers();
     }
 }

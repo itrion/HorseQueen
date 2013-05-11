@@ -33,7 +33,7 @@ public class TileTest {
         Tile tile = new Tile();
         tile.putChip(new Horse(getQueen()));
         Assert.assertFalse(tile.isEmpty());
-        tile.clear();
+        tile.cleanPlace();
         Assert.assertTrue(tile.isEmpty());
     }
 
