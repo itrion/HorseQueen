@@ -1,6 +1,5 @@
 package horsequeen.players;
 
-import core.ai.Heuristic;
 import core.ai.PlayersEnviroment;
 import core.ai.searches.MiniMax;
 import horsequeen.Board;

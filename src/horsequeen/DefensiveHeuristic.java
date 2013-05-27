@@ -6,6 +6,7 @@ public class DefensiveHeuristic implements Heuristic<Board> {
 
     @Override
     public double evaluate(Board state) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        //TODO fix the evaluation of the heuristic
+        return 10;
     }
 }

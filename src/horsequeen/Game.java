@@ -29,7 +29,10 @@ public class Game implements PlayersEnviroment {
     }
 
     private Board createInitialBoard() {
-        throw new UnsupportedOperationException("Not yet implemented");
+        Board initialBoard = new Board();
+        initialBoard.addChip(new Queen(players[0], 3));
+        initialBoard.addChip(new Queen(players[1], 60));
+        return initialBoard;
     }
 
     public void start() {

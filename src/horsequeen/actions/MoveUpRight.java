@@ -1,22 +1,15 @@
 package horsequeen.actions;
 
-import core.ai.Action;
-import core.ai.State;
 import horsequeen.Chip;
 
-public class MoveUpRight implements Action {
+public class MoveUpRight extends Movement{
 
-    public MoveUpRight(Chip chipOnBoard) {
+    public MoveUpRight(Chip chip) {
+        super(chip);
     }
 
     @Override
-    public State execute(State state) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    protected int getNewPosition() {
+        return chip.getPosition() + TWO_ROWS_UP + ONE_COLUMN_RIGHT;
     }
-
-    @Override
-    public boolean isApplicable(State state) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
 }
