@@ -1,4 +1,4 @@
-package gameengine.actions;
+package gameengine;
 
 import core.ai.Action;
 import gameengine.Board;
@@ -44,11 +44,6 @@ public abstract class Movement implements Action<Board> {
         monkey.setPosition(getNewPosition());
     }
 
-    public boolean rulesAreMet(Chip chip, int newPositions, Board state) {
-        //TODO fix when the rules are met
-        return true;
-    }
-
     @Override
     public boolean isApplicable(Board state) {
         final int newPosition = getNewPosition();
@@ -61,5 +56,9 @@ public abstract class Movement implements Action<Board> {
 
     public boolean isValidPosition(int position) {
         return (position >= 0 && position <= 64);
+    }
+
+    public boolean rulesAreMet(Chip chip, int newPositions, Board state) {
+        return RuleChecker.chechRules(chip, newPositions, state);
     }
 }

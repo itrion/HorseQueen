@@ -1,5 +1,6 @@
-package gameengine.actions;
+package gameengine.movements;
 
+import gameengine.Movement;
 import gameengine.Chip;
 
 public class MoveUpLeft extends Movement {

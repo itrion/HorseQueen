@@ -22,7 +22,7 @@ public class Queen extends Chip {
         this.sons = sons;
     }
 
-    private int getSons() {
+    public int getSons() {
         return sons;
     }
 }

@@ -1,5 +1,6 @@
-package gameengine.actions;
+package gameengine.movements;
 
+import gameengine.Movement;
 import core.ai.Action;
 import core.ai.State;
 import gameengine.Chip;
