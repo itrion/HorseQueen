@@ -1,6 +1,6 @@
-package horsequeen.actions;
+package gameengine.actions;
 
-import horsequeen.Chip;
+import gameengine.Chip;
 
 public class MoveRightDown extends Movement{
 

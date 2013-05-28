@@ -1,4 +1,4 @@
-package horsequeen;
+package gameengine;
 
 import core.ai.PlayersEnviroment;
 

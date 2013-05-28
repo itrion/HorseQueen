@@ -1,6 +1,6 @@
-package horsequeen;
+package gameengine;
 
-import horsequeen.players.AIplayer;
+import gameengine.players.AIplayer;
 
 public class Main {
     public static void main(String[] args) {

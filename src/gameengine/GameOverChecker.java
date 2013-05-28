@@ -1,4 +1,4 @@
-package horsequeen;
+package gameengine;
 public class GameOverChecker {
 
     static boolean check(Board currentState) {

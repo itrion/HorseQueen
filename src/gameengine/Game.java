@@ -1,19 +1,20 @@
-package horsequeen;
+package gameengine;
 
 import core.ai.Action;
 import core.ai.ActionList;
 import core.ai.PlayersEnviroment;
 import core.ai.State;
-import horsequeen.actions.MoveDownLeft;
-import horsequeen.actions.MoveDownRight;
-import horsequeen.actions.MoveLeftDown;
-import horsequeen.actions.MoveLeftUp;
-import horsequeen.actions.MoveRightDown;
-import horsequeen.actions.MoveRightUp;
-import horsequeen.actions.MoveUpLeft;
-import horsequeen.actions.MoveUpRight;
+import gameengine.actions.MoveDownLeft;
+import gameengine.actions.MoveDownRight;
+import gameengine.actions.MoveLeftDown;
+import gameengine.actions.MoveLeftUp;
+import gameengine.actions.MoveRightDown;
+import gameengine.actions.MoveRightUp;
+import gameengine.actions.MoveUpLeft;
+import gameengine.actions.MoveUpRight;
 import java.util.ArrayList;
 import java.util.List;
+import view.TextBoardViewer;
 
 public class Game implements PlayersEnviroment {
 
@@ -24,7 +25,7 @@ public class Game implements PlayersEnviroment {
     public Game(Player playerOne, Player playerTwo) {
         this.players = new Player[2];
         this.players[0] = playerOne;
-        this.players[0] = playerTwo;
+        this.players[1] = playerTwo;
         this.board = createInitialBoard();
     }
 
@@ -39,9 +40,11 @@ public class Game implements PlayersEnviroment {
         turnIndicator = 0;
         while (true) {
             board = playNextTurn(board);
+            new TextBoardViewer(board).view();
             if (GameOverChecker.check(board)) break;
             toggleTurn();
             board = playNextTurn(board);
+            new TextBoardViewer(board).view();
             if (GameOverChecker.check(board)) break;
             toggleTurn();
         }
@@ -52,7 +55,7 @@ public class Game implements PlayersEnviroment {
     }
 
     private void toggleTurn() {
-        turnIndicator = turnIndicator + 1 % 2;
+        turnIndicator = (turnIndicator + 1) % 2;
     }
 
     @Override
@@ -77,7 +80,8 @@ public class Game implements PlayersEnviroment {
     private List<Action> getActionsFor(Chip chipOnBoard) {
         List<Action> actionsForChip = new ArrayList<>();
         for (Action action : getActionList(chipOnBoard))
-            if (action.isApplicable(board)) actionsForChip.add(action);
+            if (action.isApplicable(board))
+                actionsForChip.add(action);
         return actionsForChip;
 
     }

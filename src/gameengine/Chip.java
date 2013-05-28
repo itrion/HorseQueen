@@ -1,4 +1,4 @@
-package horsequeen;
+package gameengine;
 
 public abstract class Chip {
 
@@ -21,4 +21,7 @@ public abstract class Chip {
     public void setPosition(int position) {
         this.position = position;
     }
+
+    @Override
+    public abstract Chip clone();
 }

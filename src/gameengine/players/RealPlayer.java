@@ -1,8 +1,8 @@
-package horsequeen.players;
+package gameengine.players;
 
 import core.ai.PlayersEnviroment;
-import horsequeen.Board;
-import horsequeen.Player;
+import gameengine.Board;
+import gameengine.Player;
 
 public class RealPlayer extends Player{
 

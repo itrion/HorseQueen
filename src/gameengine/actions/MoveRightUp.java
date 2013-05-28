@@ -1,8 +1,8 @@
-package horsequeen.actions;
+package gameengine.actions;
 
 import core.ai.Action;
 import core.ai.State;
-import horsequeen.Chip;
+import gameengine.Chip;
 
 public class MoveRightUp extends Movement {
 

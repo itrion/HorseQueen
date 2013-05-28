@@ -1,10 +1,10 @@
-package horsequeen.players;
+package gameengine.players;
 
 import core.ai.PlayersEnviroment;
 import core.ai.searches.MiniMax;
-import horsequeen.Board;
-import horsequeen.DefensiveHeuristic;
-import horsequeen.Player;
+import gameengine.Board;
+import gameengine.DefensiveHeuristic;
+import gameengine.Player;
 
 public class AIplayer extends Player {
 

@@ -1,10 +1,10 @@
-package horsequeen.actions;
+package gameengine.actions;
 
 import core.ai.Action;
-import horsequeen.Board;
-import horsequeen.Chip;
-import horsequeen.Monkey;
-import horsequeen.Queen;
+import gameengine.Board;
+import gameengine.Chip;
+import gameengine.Monkey;
+import gameengine.Queen;
 
 public abstract class Movement implements Action<Board> {
 
@@ -22,8 +22,26 @@ public abstract class Movement implements Action<Board> {
         this.chip = chip;
     }
 
-    public boolean isValidPosition(int position) {
-        return (position >= 0 && position <= 64);
+    @Override
+    public Board execute(Board state) {
+        Board board = new Board(state.getChips());
+        if (chip instanceof Queen)
+            moveQueen(board);
+        else
+            moveMonkey(board);
+        return board;
+    }
+
+    private void moveQueen(Board board) {
+        Queen queen = (Queen) board.getChip(this.chip.getPosition());
+        board.addChip(new Monkey(queen.getOwner(), queen.getPosition()));
+        queen.decraseSons();
+        queen.setPosition(getNewPosition());
+    }
+
+    private void moveMonkey(Board board) {
+        Monkey monkey = (Monkey) board.getChip(this.chip.getPosition());
+        monkey.setPosition(getNewPosition());
     }
 
     public boolean rulesAreMet(Chip chip, int newPositions, Board state) {
@@ -32,31 +50,16 @@ public abstract class Movement implements Action<Board> {
     }
 
     @Override
-    public Board execute(Board state) {
-        Board board = new Board(state.getChips());
-        if (chip instanceof Queen) moveQueen(board);
-        else moveMonkey();
-        return board;
-    }
-
-    @Override
     public boolean isApplicable(Board state) {
         final int newPosition = getNewPosition();
-        if (!isValidPosition(newPosition)) return false;
+        if (!isValidPosition(newPosition))
+            return false;
         return (rulesAreMet(chip, newPosition, state));
     }
 
-    private void moveQueen(Board board) {
-        Queen queen = (Queen) chip;
-        board.addChip(new Monkey(queen.getOwner(), queen.getPosition()));
-        queen.decraseSons();
-        queen.setPosition(getNewPosition());
-    }
-
-    private void moveMonkey() {
-        Monkey monkey = (Monkey) chip;
-        monkey.setPosition(getNewPosition());
-    }
-
     protected abstract int getNewPosition();
+
+    public boolean isValidPosition(int position) {
+        return (position >= 0 && position <= 64);
+    }
 }
