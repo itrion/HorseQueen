@@ -9,8 +9,8 @@ public class Main {
     }
 
     private void execute() {
-        Player playerOne = new AIplayer("Johan");
-        Player playerTwo = new AIplayer("Machine");
+        Player playerOne = new AIplayer("Mark Steere");
+        Player playerTwo = new AIplayer("Johan");
         Game game = new Game(playerOne, playerTwo);
         game.start();
     }
