@@ -13,24 +13,28 @@ public abstract class Movement implements Action<Board> {
     public static final int TWO_COLUMNS_LEFT = -2;
     public static final int TWO_COLUMNS_RIGHT = 2;
     protected Chip chip;
-
+    
     public Movement(Chip chip) {
         this.chip = chip;
     }
-    //TODO A queen may not give birth to its own baby and kill an enemy baby in the same move.
+
     @Override
     public Board execute(Board state) {
-        Board board = new Board(state.getChips());
+        Board board = new Board(toggleTurn(state.getTurnIndicator()), state.getChips());
+        boolean isEmptyNewPosition = board.isEmpty(getNewPosition());
+        if (!isEmptyNewPosition)
+            cleanPosition(state, getNewPosition());
         if (chip instanceof Queen)
-            moveQueen(board);
+            moveQueen(board, isEmptyNewPosition);
         else
             moveMonkey(board);
         return board;
     }
 
-    private void moveQueen(Board board) {
+    private void moveQueen(Board board, boolean isEmptyNewPosition) {
         Queen queen = (Queen) board.getChip(this.chip.getPosition());
-        board.addChip(new Monkey(queen.getOwner(), queen.getPosition()));
+        if (isEmptyNewPosition)
+            board.addChip(new Monkey(queen.getOwner(), queen.getPosition()));
         queen.decraseSons();
         queen.setPosition(getNewPosition());
     }
@@ -56,5 +60,13 @@ public abstract class Movement implements Action<Board> {
 
     public boolean rulesAreMet(Chip chip, int newPositions, Board state) {
         return RuleChecker.chechRules(chip, newPositions, state);
+    }
+
+    private int toggleTurn(int turnIndicator) {
+        return (turnIndicator + 1) % 2;
+    }
+
+    private void cleanPosition(Board state, int newPosition) {
+        state.remove(newPosition);
     }
 }

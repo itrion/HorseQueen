@@ -1,9 +1,7 @@
 package gameengine.movements;
 
-import gameengine.Movement;
-import core.ai.Action;
-import core.ai.State;
 import gameengine.Chip;
+import gameengine.Movement;
 
 public class MoveRightUp extends Movement {
 

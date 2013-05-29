@@ -2,10 +2,9 @@ package gameengine;
 
 public class RuleChecker {
 
-    public static BoardIndexTranslator boardIndexTranslator;
-
     public static boolean chechRules(Chip chip, int newPosition, Board board) {
-        final boolean capturingMovement = isCapturingMovement(chip, newPosition, board);
+        if (newPositionHasChipOfMine(chip, newPosition, board)) return false;
+        boolean capturingMovement = isCapturingMovement(chip, newPosition, board);
         if (chip instanceof Queen) {
             Queen queen = (Queen) chip;
             return !queenOfHeightEqualLessThanTwoMovesWithoutCapture(queen, capturingMovement);
@@ -16,16 +15,15 @@ public class RuleChecker {
     }
 
     private static boolean isCapturingMovement(Chip chip, int newPosition, Board board) {
-        Chip chipOnBoard = board.getChip(newPosition);
-        if (chipOnBoard == null) return false;
-        return (chipOnBoard.getOwner() != chip.getOwner());
+        if (board.isEmpty(newPosition)) return false;
+        return (board.getChip(newPosition).getOwner() != chip.getOwner());
     }
 
     private static boolean moveTowardEnemyQueen(Chip chip, int newPosition, Board board) {
         Chip clone = chip.clone();
         clone.setPosition(newPosition);
-        double olderEuclideanPosition = boardIndexTranslator.getEuclideanDistance(chip, board.getEnemyQueen(chip));
-        double newEuclideanPosition = boardIndexTranslator.getEuclideanDistance(clone, board.getEnemyQueen(chip));
+        double olderEuclideanPosition = board.getEuclideanDistance(chip, board.getEnemyQueen(chip));
+        double newEuclideanPosition = board.getEuclideanDistance(clone, board.getEnemyQueen(chip));
         return (newEuclideanPosition <= olderEuclideanPosition);
     }
 
@@ -35,5 +33,10 @@ public class RuleChecker {
 
     private static boolean monkeyDontCapturesAndDontGoesTowardEnemyQueen(final boolean capturingMovement, Chip chip, int newPosition, Board board) {
         return !capturingMovement && !moveTowardEnemyQueen(chip, newPosition, board);
+    }
+
+    private static boolean newPositionHasChipOfMine(Chip chip, int newPosition, Board board) {
+        if (board.isEmpty(newPosition)) return false;
+        return board.getChip(newPosition).getOwner() == chip.getOwner();
     }
 }

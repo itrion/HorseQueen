@@ -23,19 +23,16 @@ public class Game implements PlayersEnviroment {
     private Player[] players;
     private int turnIndicator;
     private Board board;
-    private BoardIndexTranslator boardIndexTranslator;
-    
+
     public Game(Player playerOne, Player playerTwo) {
         this.players = new Player[2];
         this.players[0] = playerOne;
         this.players[1] = playerTwo;
         this.board = createInitialBoard();
-        this.boardIndexTranslator = new BoardIndexTranslator(ROWS, COLS);
     }
 
     private Board createInitialBoard() {
-        RuleChecker.boardIndexTranslator = boardIndexTranslator;
-        Board initialBoard = new Board();
+        Board initialBoard = new Board(0);
         initialBoard.addChip(new Queen(players[0], 3));
         initialBoard.addChip(new Queen(players[1], 60));
         return initialBoard;
@@ -65,12 +62,12 @@ public class Game implements PlayersEnviroment {
 
     @Override
     public boolean isFinalState(State state) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return GameOverChecker.check((Board) state);
     }
 
     @Override
     public boolean isTurnOf(State state) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return (turnIndicator == ((Board)state).getTurnIndicator());
     }
 
     @Override
