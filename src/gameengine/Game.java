@@ -18,18 +18,23 @@ import view.TextBoardViewer;
 
 public class Game implements PlayersEnviroment {
 
+    private static final int ROWS = 8;
+    private static final int COLS = 8;
     private Player[] players;
     private int turnIndicator;
     private Board board;
-
+    private BoardIndexTranslator boardIndexTranslator;
+    
     public Game(Player playerOne, Player playerTwo) {
         this.players = new Player[2];
         this.players[0] = playerOne;
         this.players[1] = playerTwo;
         this.board = createInitialBoard();
+        this.boardIndexTranslator = new BoardIndexTranslator(ROWS, COLS);
     }
 
     private Board createInitialBoard() {
+        RuleChecker.boardIndexTranslator = boardIndexTranslator;
         Board initialBoard = new Board();
         initialBoard.addChip(new Queen(players[0], 3));
         initialBoard.addChip(new Queen(players[1], 60));

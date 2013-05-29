@@ -12,6 +12,7 @@ public class AIplayer extends Player {
 
     public AIplayer(String name) {
         super(name);
+        this.maxDepth = 10;
     }
 
     @Override

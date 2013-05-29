@@ -40,4 +40,14 @@ public class Board extends InformedState implements Cloneable {
             if (chip.getPosition() == index) return chip;
         return null;
     }
+
+    public Chip getEnemyQueen(Chip chip) {
+        for (Chip chipInBoard : chips)
+            if (isEnemyQueen(chipInBoard, chip)) return chipInBoard;
+        return null;
+    }
+
+    private boolean isEnemyQueen(Chip chipInBoard, Chip chip) {
+        return (chip.getOwner() != chipInBoard.getOwner());
+    }
 }

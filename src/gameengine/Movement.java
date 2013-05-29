@@ -1,10 +1,6 @@
 package gameengine;
 
 import core.ai.Action;
-import gameengine.Board;
-import gameengine.Chip;
-import gameengine.Monkey;
-import gameengine.Queen;
 
 public abstract class Movement implements Action<Board> {
 
@@ -21,7 +17,7 @@ public abstract class Movement implements Action<Board> {
     public Movement(Chip chip) {
         this.chip = chip;
     }
-
+    //TODO A queen may not give birth to its own baby and kill an enemy baby in the same move.
     @Override
     public Board execute(Board state) {
         Board board = new Board(state.getChips());
