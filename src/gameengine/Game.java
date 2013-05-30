@@ -14,15 +14,17 @@ import gameengine.movements.MoveUpLeft;
 import gameengine.movements.MoveUpRight;
 import java.util.ArrayList;
 import java.util.List;
-import view.TextBoardViewer;
+import java.util.Observable;
+import java.util.Observer;
 
-public class Game implements PlayersEnviroment {
+public class Game extends Observable implements PlayersEnviroment {
 
     private static final int ROWS = 8;
     private static final int COLS = 8;
     private Player[] players;
     private int turnIndicator;
     private Board board;
+    private GameOverChecker gameOverChecker;
 
     public Game(Player playerOne, Player playerTwo) {
         this.players = new Player[2];
@@ -30,6 +32,7 @@ public class Game implements PlayersEnviroment {
         this.players[1] = playerTwo;
         this.turnIndicator = 0;
         this.board = createInitialBoard();
+        this.gameOverChecker = new GameOverChecker(this);
     }
 
     private Board createInitialBoard() {
@@ -42,12 +45,12 @@ public class Game implements PlayersEnviroment {
     public void start() {
         while (true) {
             board = playNextTurn(board);
-            new TextBoardViewer(board).view();
-            if (GameOverChecker.check(board)) break;
+            notifyChangeInBoard();
+            if (gameOverChecker.check(board)) break;
             toggleTurn();
             board = playNextTurn(board);
-            new TextBoardViewer(board).view();
-            if (GameOverChecker.check(board)) break;
+            notifyChangeInBoard();
+            if (gameOverChecker.check(board)) break;
             toggleTurn();
         }
     }
@@ -56,18 +59,23 @@ public class Game implements PlayersEnviroment {
         return players[turnIndicator].play(currentState, this);
     }
 
+    private void notifyChangeInBoard() {
+        setChanged();
+        notifyObservers(board);
+    }
+
     private void toggleTurn() {
         turnIndicator = (turnIndicator + 1) % 2;
     }
 
     @Override
     public boolean isFinalState(State state) {
-        return GameOverChecker.check((Board) state);
+        return gameOverChecker.check((Board) state);
     }
 
     @Override
     public boolean isTurnOf(State state) {
-        return (turnIndicator == ((Board)state).getTurnIndicator());
+        return (turnIndicator == ((Board) state).getTurnIndicator());
     }
 
     @Override
@@ -115,5 +123,17 @@ public class Game implements PlayersEnviroment {
         actions.add(new MoveRightUp(chipOnBoard));
         actions.add(new MoveRightDown(chipOnBoard));
         return actions;
+    }
+
+    public Player[] getPlayers() {
+        return players;
+    }
+
+    public int getTurnIndicator() {
+        return turnIndicator;
+    }
+
+    public Board getBoard() {
+        return board;
     }
 }

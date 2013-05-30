@@ -11,15 +11,18 @@ public class TextBoardViewer {
         this.board = board;
     }
 
-    public void view() {
+    @Override
+    public String toString() {
+        String out = new String();
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j <= 8; j++) {
                 Chip chip = board.getChip((i * 8) + j);
-                if (chip == null) System.out.print("# ");
-                else System.out.print(new ChipViewer(chip).toString() + " ");
+                if (chip == null) out += "# ";
+                else out += new ChipViewer(chip).toString() + " ";
             }
-            System.out.println();
+            out += "\n";
         }
-        System.out.println("\n\n");
+        out += "\n\n";
+        return out;
     }
 }
