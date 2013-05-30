@@ -28,18 +28,18 @@ public class Game implements PlayersEnviroment {
         this.players = new Player[2];
         this.players[0] = playerOne;
         this.players[1] = playerTwo;
+        this.turnIndicator = 0;
         this.board = createInitialBoard();
     }
 
     private Board createInitialBoard() {
-        Board initialBoard = new Board(0);
+        Board initialBoard = new Board(turnIndicator);
         initialBoard.addChip(new Queen(players[0], 3));
         initialBoard.addChip(new Queen(players[1], 60));
         return initialBoard;
     }
 
     public void start() {
-        turnIndicator = 0;
         while (true) {
             board = playNextTurn(board);
             new TextBoardViewer(board).view();
@@ -72,17 +72,18 @@ public class Game implements PlayersEnviroment {
 
     @Override
     public List getApplicableActions(State state) {
+        Board currentBoard = (Board) state;
         List<Action> applicableActions = new ArrayList<>();
-        for (Chip chipOnBoard : board.getChips())
+        for (Chip chipOnBoard : currentBoard.cloneChips())
             if (chipOnBoard.getOwner() == players[turnIndicator])
-                applicableActions.addAll(getActionsFor(chipOnBoard));
+                applicableActions.addAll(getActionsFor(chipOnBoard, currentBoard));
         return applicableActions;
     }
 
-    private List<Action> getActionsFor(Chip chipOnBoard) {
+    private List<Action> getActionsFor(Chip chipOnBoard, Board currentBoard) {
         List<Action> actionsForChip = new ArrayList<>();
         for (Action action : getActionList(chipOnBoard))
-            if (action.isApplicable(board))
+            if (action.isApplicable(currentBoard))
                 actionsForChip.add(action);
         return actionsForChip;
 

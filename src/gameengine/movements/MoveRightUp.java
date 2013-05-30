@@ -11,7 +11,7 @@ public class MoveRightUp extends Movement {
 
     @Override
     protected int getNewPosition() {
-        return chip.getPosition() + TWO_COLUMNS_RIGHT + ONE_ROW_UP;
+        return chip.getPosition() + ONE_COLUMN_RIGHT + TWO_ROWS_UP;
     }
 
 }

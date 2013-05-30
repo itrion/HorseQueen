@@ -1,7 +1,7 @@
 package gameengine.movements;
 
-import gameengine.Movement;
 import gameengine.Chip;
+import gameengine.Movement;
 
 public class MoveRightDown extends Movement{
 
@@ -11,6 +11,6 @@ public class MoveRightDown extends Movement{
 
     @Override
     protected int getNewPosition() {
-        return chip.getPosition() + TWO_COLUMNS_RIGHT + ONE_ROW_DOWN;
+        return chip.getPosition() + ONE_COLUMN_RIGHT + TWO_ROWS_DOWN;
     }
 }

@@ -13,22 +13,45 @@ public abstract class Movement implements Action<Board> {
     public static final int TWO_COLUMNS_LEFT = -2;
     public static final int TWO_COLUMNS_RIGHT = 2;
     protected Chip chip;
-    
+
     public Movement(Chip chip) {
         this.chip = chip;
     }
 
     @Override
-    public Board execute(Board state) {
-        Board board = new Board(toggleTurn(state.getTurnIndicator()), state.getChips());
-        boolean isEmptyNewPosition = board.isEmpty(getNewPosition());
+    public boolean isApplicable(Board state) {
+        final int newPosition = getNewPosition();
+        if (!isValidPosition(newPosition)) return false;
+        return (rulesAreMet(chip, newPosition, state));
+    }
+
+    public boolean isValidPosition(int position) {
+        return (position >= 0 && position <= 64);
+    }
+
+    public boolean rulesAreMet(Chip chip, int newPositions, Board state) {
+        return RuleChecker.chechRules(chip, newPositions, state);
+    }
+
+    @Override
+    public Board execute(Board currentBoard) {
+        Board clonedBoard = new Board(toggleTurn(currentBoard.getTurnIndicator()), currentBoard.cloneChips());
+        boolean isEmptyNewPosition = clonedBoard.isEmpty(getNewPosition());
         if (!isEmptyNewPosition)
-            cleanPosition(state, getNewPosition());
+            cleanPosition(clonedBoard, getNewPosition());
         if (chip instanceof Queen)
-            moveQueen(board, isEmptyNewPosition);
+            moveQueen(clonedBoard, isEmptyNewPosition);
         else
-            moveMonkey(board);
-        return board;
+            moveMonkey(clonedBoard);
+        return clonedBoard;
+    }
+
+    private int toggleTurn(int turnIndicator) {
+        return (turnIndicator + 1) % 2;
+    }
+
+    private void cleanPosition(Board board, int newPosition) {
+        board.remove(newPosition);
     }
 
     private void moveQueen(Board board, boolean isEmptyNewPosition) {
@@ -44,29 +67,5 @@ public abstract class Movement implements Action<Board> {
         monkey.setPosition(getNewPosition());
     }
 
-    @Override
-    public boolean isApplicable(Board state) {
-        final int newPosition = getNewPosition();
-        if (!isValidPosition(newPosition))
-            return false;
-        return (rulesAreMet(chip, newPosition, state));
-    }
-
     protected abstract int getNewPosition();
-
-    public boolean isValidPosition(int position) {
-        return (position >= 0 && position <= 64);
-    }
-
-    public boolean rulesAreMet(Chip chip, int newPositions, Board state) {
-        return RuleChecker.chechRules(chip, newPositions, state);
-    }
-
-    private int toggleTurn(int turnIndicator) {
-        return (turnIndicator + 1) % 2;
-    }
-
-    private void cleanPosition(Board state, int newPosition) {
-        state.remove(newPosition);
-    }
 }

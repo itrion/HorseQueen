@@ -7,8 +7,8 @@ import java.util.List;
 
 public class Board extends InformedState implements Cloneable {
 
-    private static int ROWS;
-    private static int COLS;
+    private static int ROWS = 8;
+    private static int COLS = 8;
     private List<Chip> chips;
     private int turnIndicator;
 
@@ -29,7 +29,7 @@ public class Board extends InformedState implements Cloneable {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public List<Chip> getChips() {
+    public List<Chip> cloneChips() {
         List<Chip> clonedChips = new ArrayList<>();
         for (Chip chip : chips)
             clonedChips.add(chip.clone());
@@ -44,6 +44,10 @@ public class Board extends InformedState implements Cloneable {
         for (Chip chip : chips)
             if (chip.getPosition() == index) return chip;
         return null;
+    }
+
+    public List<Chip> getChips() {
+        return chips;
     }
 
     public void remove(int index) {
