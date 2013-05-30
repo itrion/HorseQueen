@@ -1,4 +1,4 @@
-package gameengine;
+package gameengine.model;
 
 public class Queen extends Chip {
 

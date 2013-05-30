@@ -1,5 +1,6 @@
 package gameengine;
 
+import gameengine.model.Player;
 import gameengine.players.AIplayer;
 import view.GameViewer;
 

@@ -1,7 +1,7 @@
 package view;
 
-import gameengine.Board;
-import gameengine.Chip;
+import gameengine.model.Board;
+import gameengine.model.Chip;
 
 public class TextBoardViewer {
 

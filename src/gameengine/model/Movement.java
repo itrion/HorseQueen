@@ -1,6 +1,7 @@
-package gameengine;
+package gameengine.model;
 
 import core.ai.Action;
+import gameengine.RuleChecker;
 
 public abstract class Movement implements Action<Board> {
 

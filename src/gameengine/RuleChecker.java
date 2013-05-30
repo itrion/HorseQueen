@@ -1,5 +1,10 @@
 package gameengine;
 
+import gameengine.model.Chip;
+import gameengine.model.Monkey;
+import gameengine.model.Board;
+import gameengine.model.Queen;
+
 public class RuleChecker {
 
     public static boolean chechRules(Chip chip, int newPosition, Board board) {

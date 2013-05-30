@@ -1,5 +1,8 @@
 package gameengine;
 
+import gameengine.model.Chip;
+import gameengine.model.Board;
+import gameengine.model.Queen;
 import core.ai.PlayersEnviroment;
 import java.util.List;
 

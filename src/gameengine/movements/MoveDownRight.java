@@ -1,7 +1,7 @@
 package gameengine.movements;
 
-import gameengine.Chip;
-import gameengine.Movement;
+import gameengine.model.Chip;
+import gameengine.model.Movement;
 
 public class MoveDownRight extends Movement {
 

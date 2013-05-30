@@ -1,8 +1,8 @@
 package gameengine.players;
 
 import core.ai.PlayersEnviroment;
-import gameengine.Board;
-import gameengine.Player;
+import gameengine.model.Board;
+import gameengine.model.Player;
 
 public class RealPlayer extends Player{
 

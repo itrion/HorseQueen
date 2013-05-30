@@ -1,5 +1,9 @@
 package gameengine;
 
+import gameengine.model.Player;
+import gameengine.model.Chip;
+import gameengine.model.Board;
+import gameengine.model.Queen;
 import core.ai.Action;
 import core.ai.ActionList;
 import core.ai.PlayersEnviroment;

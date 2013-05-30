@@ -1,4 +1,4 @@
-package gameengine;
+package gameengine.model;
 
 public abstract class Chip {
 

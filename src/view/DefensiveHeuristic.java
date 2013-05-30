@@ -1,5 +1,6 @@
-package gameengine;
+package view;
 
+import gameengine.model.Board;
 import core.ai.Heuristic;
 
 public class DefensiveHeuristic implements Heuristic<Board> {

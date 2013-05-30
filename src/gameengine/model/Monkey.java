@@ -1,4 +1,4 @@
-package gameengine;
+package gameengine.model;
 public class Monkey extends Chip{
 
     public Monkey(Player owner, int position) {

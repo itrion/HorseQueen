@@ -1,6 +1,6 @@
 package view;
 
-import gameengine.Board;
+import gameengine.model.Board;
 import gameengine.Game;
 import java.util.Observable;
 import java.util.Observer;

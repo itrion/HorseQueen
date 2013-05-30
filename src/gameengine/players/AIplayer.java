@@ -2,9 +2,9 @@ package gameengine.players;
 
 import core.ai.PlayersEnviroment;
 import core.ai.searches.MiniMax;
-import gameengine.Board;
-import gameengine.DefensiveHeuristic;
-import gameengine.Player;
+import gameengine.model.Board;
+import view.DefensiveHeuristic;
+import gameengine.model.Player;
 
 public class AIplayer extends Player {
 

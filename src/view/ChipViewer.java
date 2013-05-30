@@ -1,7 +1,7 @@
 package view;
 
-import gameengine.Chip;
-import gameengine.Queen;
+import gameengine.model.Chip;
+import gameengine.model.Queen;
 
 public class ChipViewer {
 

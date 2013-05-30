@@ -1,4 +1,4 @@
-package gameengine;
+package gameengine.model;
 
 import core.ai.PlayersEnviroment;
 
