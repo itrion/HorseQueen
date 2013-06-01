@@ -14,20 +14,26 @@ public abstract class Movement implements Action<Board> {
     public static final int TWO_COLUMNS_LEFT = -2;
     public static final int TWO_COLUMNS_RIGHT = 2;
     protected Chip chip;
+    protected Board board;
 
     protected Movement(Chip chip) {
         this.chip = chip;
     }
 
     @Override
-    public boolean isApplicable(Board state) {
+    public boolean isApplicable(Board board) {
+        this.board = board;
         final int newPosition = getNewPosition();
-        if (!isValidPosition(newPosition)) return false;
-        return (rulesAreMet(chip, newPosition, state));
+        if (!isValidPosition()) return false;
+        return (rulesAreMet(chip, newPosition, board));
     }
 
-    public boolean isValidPosition(int position) {
-        return (position >= 0 && position <= 64);
+    public boolean isValidPosition() {
+        Chip clonedChip = chip.clone();
+        clonedChip.setPosition(getNewPosition());
+        if (Math.abs(board.getCol(chip) - board.getCol(clonedChip)) > 2) return false;
+        if (Math.abs(board.getRow(chip) - board.getRow(clonedChip)) > 2) return false;
+        return (getNewPosition() >= 0 && getNewPosition() <= 64);
     }
 
     public boolean rulesAreMet(Chip chip, int newPositions, Board state) {
@@ -58,8 +64,7 @@ public abstract class Movement implements Action<Board> {
     private void moveQueen(Board board, boolean isEmptyNewPosition) {
         Queen queen = (Queen) board.getChip(this.chip.getPosition());
         if (isEmptyNewPosition)
-            board.addChip(new Monkey(queen.getOwner(), queen.getPosition()));
-        queen.decraseSons();
+            bornNewMonkey(board, queen);
         queen.setPosition(getNewPosition());
     }
 
@@ -72,5 +77,10 @@ public abstract class Movement implements Action<Board> {
 
     public Chip getChip() {
         return chip;
+    }
+
+    private void bornNewMonkey(Board board, Queen queen) {
+        board.addChip(new Monkey(queen.getOwner(), queen.getPosition()));
+        queen.decraseSons();
     }
 }

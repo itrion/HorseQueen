@@ -23,11 +23,16 @@ public class ChipViewer extends JPanel {
         if (chip == null) return;
         if (chip instanceof Queen) drawQueen();
         else drawMonkey();
+        Color color = Color.decode("#D2B58D");
+        if (chip.getOwner().getTurnIndicator() == 0)
+            color = Color.decode("#FAEED8");
+        setBackground(color);
+
 
     }
 
     private void drawQueen() {
-        add(new JLabel("Q"+ ((Queen) chip).getSons()));
+        add(new JLabel("Q" + ((Queen) chip).getSons()));
         add(new JLabel("pos" + chip.getPosition()));
     }
 

@@ -11,7 +11,7 @@ public class AIplayer extends Player {
 
     public AIplayer(String name, int turnIndicator) {
         super(name, turnIndicator);
-        this.maxDepth = 3;
+        this.maxDepth = 4;
     }
 
     @Override
