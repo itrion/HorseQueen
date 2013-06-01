@@ -1,4 +1,4 @@
-package view;
+package gameengine.players;
 
 import gameengine.model.Board;
 import core.ai.Heuristic;

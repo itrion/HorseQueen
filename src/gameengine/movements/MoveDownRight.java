@@ -10,7 +10,7 @@ public class MoveDownRight extends Movement {
     }
 
     @Override
-    protected int getNewPosition() {
+    public int getNewPosition() {
         return chip.getPosition() + ONE_ROW_DOWN + TWO_COLUMNS_RIGHT;
     }
 }

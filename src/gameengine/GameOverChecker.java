@@ -22,8 +22,9 @@ public class GameOverChecker {
     }
 
     private boolean wasQueenKilled(Board currentState) {
-        Chip firsChip = currentState.getChip(0);
-        Chip secondChip = currentState.getChip(1);
+        List<Chip> chips = currentState.getChips();
+        Chip firsChip = chips.get(0);
+        Chip secondChip = chips.get(1);
         return !areBothQueens(firsChip, secondChip);
     }
 

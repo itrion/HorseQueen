@@ -7,8 +7,8 @@ import java.util.List;
 
 public class Board extends InformedState implements Cloneable {
 
-    private static int ROWS = 8;
-    private static int COLS = 8;
+    public static int ROWS = 8;
+    public static int COLS = 8;
     private List<Chip> chips;
     private int turnIndicator;
 
@@ -94,15 +94,11 @@ public class Board extends InformedState implements Cloneable {
         return turnIndicator;
     }
 
-    public static void setROWS(int ROWS) {
-        Board.ROWS = ROWS;
-    }
-
-    public static void setCOLS(int COLS) {
-        Board.COLS = COLS;
-    }
-
     public boolean isEmpty(int newPosition) {
         return (getChip(newPosition) == null);
+    }
+
+    public int getSize() {
+        return ROWS * COLS;
     }
 }

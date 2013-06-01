@@ -15,7 +15,7 @@ public abstract class Movement implements Action<Board> {
     public static final int TWO_COLUMNS_RIGHT = 2;
     protected Chip chip;
 
-    public Movement(Chip chip) {
+    protected Movement(Chip chip) {
         this.chip = chip;
     }
 
@@ -68,5 +68,9 @@ public abstract class Movement implements Action<Board> {
         monkey.setPosition(getNewPosition());
     }
 
-    protected abstract int getNewPosition();
+    public abstract int getNewPosition();
+
+    public Chip getChip() {
+        return chip;
+    }
 }

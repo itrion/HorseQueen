@@ -3,15 +3,14 @@ package gameengine.players;
 import core.ai.PlayersEnviroment;
 import core.ai.searches.MiniMax;
 import gameengine.model.Board;
-import view.DefensiveHeuristic;
 import gameengine.model.Player;
 
 public class AIplayer extends Player {
 
     private int maxDepth;
 
-    public AIplayer(String name) {
-        super(name);
+    public AIplayer(String name, int turnIndicator) {
+        super(name, turnIndicator);
         this.maxDepth = 3;
     }
 

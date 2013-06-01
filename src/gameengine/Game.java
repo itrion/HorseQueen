@@ -19,7 +19,6 @@ import gameengine.movements.MoveUpRight;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
-import java.util.Observer;
 
 public class Game extends Observable implements PlayersEnviroment {
 
@@ -57,6 +56,7 @@ public class Game extends Observable implements PlayersEnviroment {
             if (gameOverChecker.check(board)) break;
             toggleTurn();
         }
+        System.out.println("Congratulations: "+players[turnIndicator].getName()+", You Win");
     }
 
     private Board playNextTurn(Board currentState) {
