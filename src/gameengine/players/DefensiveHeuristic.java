@@ -14,9 +14,13 @@ public class DefensiveHeuristic implements Heuristic<Board> {
             return Double.NEGATIVE_INFINITY;
         if (isOtherQueenDead(board, turnIndicator))
             return Double.POSITIVE_INFINITY;
-
+        
         //TODO fix the evaluation of the heuristic
         return 10;
+    }
+
+    private int toggelTurn(int turnIndicator) {
+        return (turnIndicator + 1) % 2;
     }
 
     private boolean isMyQueenDead(Board board, int turnIndicator) {
@@ -39,9 +43,5 @@ public class DefensiveHeuristic implements Heuristic<Board> {
 
     private boolean isMine(Chip chip, int turnIndicator) {
         return (chip.getOwner().getTurnIndicator() == turnIndicator);
-    }
-
-    private int toggelTurn(int turnIndicator) {
-        return (turnIndicator + 1) % 2;
     }
 }
