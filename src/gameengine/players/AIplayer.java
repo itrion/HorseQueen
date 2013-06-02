@@ -14,15 +14,12 @@ public class AIplayer extends Player {
 
     public AIplayer(String name, int turnIndicator) {
         super(name, turnIndicator);
-        this.maxDepth = 4;
+        this.maxDepth = 5;
     }
 
     @Override
     public Board playTurn(Board currentState, PlayersEnviroment enviroment) {
         if (isFirstTurn(currentState)) return randomizeFirstTurn(currentState, enviroment);
-        if (enviroment.getApplicableActions(currentState).size() <= 8) maxDepth = 8;
-        if (enviroment.getApplicableActions(currentState).size() >= 12) maxDepth = 4;
-        else maxDepth = 6;
         System.out.println("Ai movements");
         List<Action> applicableActions = enviroment.getApplicableActions(currentState);
         for (Action action : applicableActions) {

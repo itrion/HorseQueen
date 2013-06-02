@@ -4,6 +4,8 @@ import core.ai.Heuristic;
 import gameengine.model.Board;
 import gameengine.model.Chip;
 import gameengine.model.Queen;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DefensiveHeuristic implements Heuristic<Board> {
 
@@ -11,10 +13,9 @@ public class DefensiveHeuristic implements Heuristic<Board> {
     public double evaluate(Board board) {
         int turnIndicator = toggelTurn(board.getTurnIndicator());
         if (isMyQueenDead(board, turnIndicator)) return -Double.MAX_VALUE;
-        if (canMyQueenDie(board, turnIndicator)) return -Double.MAX_VALUE;
         if (isOtherQueenDead(board, turnIndicator)) return Double.MAX_VALUE;
         if (myQueenhasLessThanFourSons(board, turnIndicator)) return -Double.MAX_VALUE;
-        return chipDiference(board, turnIndicator);
+        return chipDiference(board, turnIndicator) * 3 - chipsWhichCanDie(board, turnIndicator) * 7;
     }
 
     private int toggelTurn(int turnIndicator) {
@@ -23,22 +24,14 @@ public class DefensiveHeuristic implements Heuristic<Board> {
 
     private boolean isMyQueenDead(Board board, int turnIndicator) {
         Chip chip = board.getChips().get(turnIndicator);
-        return (!isQueen(chip) || !isMine(chip, turnIndicator));
+        if (isQueen(chip))
+            if (isMine(chip, turnIndicator))
+                return false;
+        return true;
     }
 
     private boolean isOtherQueenDead(Board board, int turnIndicator) {
-        Chip chip = board.getChips().get(toggelTurn(turnIndicator));
-        if (!isQueen(chip) || isMine(chip, turnIndicator))
-            return true;
-        else return false;
-    }
-
-    private boolean canMyQueenDie(Board board, int turnIndicator) {
-        Queen myQueen = getMyQueen(board, turnIndicator);
-        for (Chip chip : board.getChips())
-            if (!isMine(chip, turnIndicator))
-                if (canKillMyChip(myQueen, chip, board)) return true;
-        return false;
+        return isMyQueenDead(board, toggelTurn(turnIndicator));
     }
 
     private boolean myQueenhasLessThanFourSons(Board board, int turnIndicator) {
@@ -46,8 +39,26 @@ public class DefensiveHeuristic implements Heuristic<Board> {
         return (myQueen.getSons() <= 3);
     }
 
-    private Queen getMyQueen(Board board, int turnIndicator) {
-        return (Queen) board.getChips().get(turnIndicator);
+    private int chipsWhichCanDie(Board board, int turnIndicator) {
+        int chipCanDieCounter = 0;
+        List<Chip> myChips = new ArrayList();
+        List<Chip> enemyChips = new ArrayList();
+        for (Chip chip : board.getChips())
+            if (isMine(chip, turnIndicator))
+                myChips.add(chip);
+            else
+                enemyChips.add(chip);
+        Chip queen = myChips.get(0);
+        myChips.remove(0);
+        if (isQueen(queen))
+            for(Chip enemyChip:enemyChips)
+                if (canKillMyChip(queen, enemyChip, board))
+                    return Integer.MAX_VALUE;
+        for (Chip myChip : myChips)
+            for (Chip enemyChip : enemyChips)
+                if (canKillMyChip(myChip, enemyChip, board))
+                    chipCanDieCounter++;
+        return chipCanDieCounter;
     }
 
     private boolean canKillMyChip(Chip myChip, Chip enemyChip, Board board) {
@@ -66,7 +77,7 @@ public class DefensiveHeuristic implements Heuristic<Board> {
                 myChipsCounter++;
             else
                 enemyChipsCounter++;
-        return myChipsCounter-enemyChipsCounter;
+        return myChipsCounter - enemyChipsCounter;
     }
 
     private boolean isQueen(Chip chip) {

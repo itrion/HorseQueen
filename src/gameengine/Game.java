@@ -22,8 +22,6 @@ import java.util.Observable;
 
 public class Game extends Observable implements PlayersEnviroment {
 
-    private static final int ROWS = 8;
-    private static final int COLS = 8;
     private Player[] players;
     private int turnIndicator;
     private Board board;
