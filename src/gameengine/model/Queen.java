@@ -2,10 +2,11 @@ package gameengine.model;
 
 public class Queen extends Chip {
 
+    private static final int MAX_SONS = 10;
     private int sons;
 
     public Queen(Player owner, int position) {
-        this(owner, position, 10);
+        this(owner, position, MAX_SONS);
     }
 
     public void decraseSons() {

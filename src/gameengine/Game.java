@@ -1,13 +1,13 @@
 package gameengine;
 
-import gameengine.model.Player;
-import gameengine.model.Chip;
-import gameengine.model.Board;
-import gameengine.model.Queen;
 import core.ai.Action;
 import core.ai.ActionList;
 import core.ai.PlayersEnviroment;
 import core.ai.State;
+import gameengine.model.Board;
+import gameengine.model.Chip;
+import gameengine.model.Player;
+import gameengine.model.Queen;
 import gameengine.movements.MoveDownLeft;
 import gameengine.movements.MoveDownRight;
 import gameengine.movements.MoveLeftDown;
@@ -56,20 +56,20 @@ public class Game extends Observable implements PlayersEnviroment {
             if (gameOverChecker.check(board)) break;
             toggleTurn();
         }
-        System.out.println("Congratulations: "+players[turnIndicator].getName()+", You Win");
+        System.out.println("Congratulations: " + players[turnIndicator].getName() + ", You Win");
     }
 
     private Board playNextTurn(Board currentState) {
-        return players[turnIndicator].play(currentState, this);
+        return players[turnIndicator].playTurn(currentState, this);
+    }
+
+    private void toggleTurn() {
+        turnIndicator = (turnIndicator + 1) % 2;
     }
 
     private void notifyChangeInBoard() {
         setChanged();
         notifyObservers(board);
-    }
-
-    private void toggleTurn() {
-        turnIndicator = (turnIndicator + 1) % 2;
     }
 
     @Override
@@ -101,21 +101,6 @@ public class Game extends Observable implements PlayersEnviroment {
 
     }
 
-    @Override
-    public State getFinalState() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public State getInitialState() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public ActionList getActionList() {
-        return null;
-    }
-
     private List<Action> getActionList(Chip chipOnBoard) {
         List<Action> actions = new ArrayList<>();
         actions.add(new MoveUpLeft(chipOnBoard));
@@ -139,5 +124,20 @@ public class Game extends Observable implements PlayersEnviroment {
 
     public Board getBoard() {
         return board;
+    }
+
+    @Override
+    public State getFinalState() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public State getInitialState() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public ActionList getActionList() {
+        return null;
     }
 }

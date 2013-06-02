@@ -20,5 +20,5 @@ public abstract class Player {
         return turnIndicator;
     }
 
-    public abstract Board play(Board currentState, PlayersEnviroment enviroment);
+    public abstract Board playTurn(Board currentState, PlayersEnviroment enviroment);
 }

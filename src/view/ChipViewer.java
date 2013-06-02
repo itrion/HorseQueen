@@ -33,11 +33,11 @@ public class ChipViewer extends JPanel {
 
     private void drawQueen() {
         add(new JLabel("Q" + ((Queen) chip).getSons()));
-        add(new JLabel("pos" + chip.getPosition()));
+        add(new JLabel("ID" + chip.getPosition()));
     }
 
     private void drawMonkey() {
         add(new JLabel("M"));
-        add(new JLabel("pos" + chip.getPosition()));
+        add(new JLabel("ID" + chip.getPosition()));
     }
 }

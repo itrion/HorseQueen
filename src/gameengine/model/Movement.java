@@ -23,17 +23,17 @@ public abstract class Movement implements Action<Board> {
     @Override
     public boolean isApplicable(Board board) {
         this.board = board;
-        final int newPosition = getNewPosition();
-        if (!isValidPosition()) return false;
+        int newPosition = getNewPosition();
+        if (!isValidPosition(newPosition)) return false;
         return (rulesAreMet(chip, newPosition, board));
     }
 
-    public boolean isValidPosition() {
+    public boolean isValidPosition(int newPosition) {
         Chip clonedChip = chip.clone();
-        clonedChip.setPosition(getNewPosition());
+        clonedChip.setPosition(newPosition);
         if (Math.abs(board.getCol(chip) - board.getCol(clonedChip)) > 2) return false;
         if (Math.abs(board.getRow(chip) - board.getRow(clonedChip)) > 2) return false;
-        return (getNewPosition() >= 0 && getNewPosition() <= 64);
+        return (newPosition >= 0 && newPosition <= 64);
     }
 
     public boolean rulesAreMet(Chip chip, int newPositions, Board state) {
@@ -42,15 +42,15 @@ public abstract class Movement implements Action<Board> {
 
     @Override
     public Board execute(Board currentBoard) {
-        Board clonedBoard = new Board(toggleTurn(currentBoard.getTurnIndicator()), currentBoard.cloneChips());
-        boolean isEmptyNewPosition = clonedBoard.isEmpty(getNewPosition());
+        Board nextTurnBoard = new Board(toggleTurn(currentBoard.getTurnIndicator()), currentBoard.cloneChips());
+        boolean isEmptyNewPosition = nextTurnBoard.isEmpty(getNewPosition());
         if (!isEmptyNewPosition)
-            cleanPosition(clonedBoard, getNewPosition());
+            cleanPosition(nextTurnBoard, getNewPosition());
         if (chip instanceof Queen)
-            moveQueen(clonedBoard, isEmptyNewPosition);
+            moveQueen(nextTurnBoard, isEmptyNewPosition);
         else
-            moveMonkey(clonedBoard);
-        return clonedBoard;
+            moveMonkey(nextTurnBoard);
+        return nextTurnBoard;
     }
 
     private int toggleTurn(int turnIndicator) {
@@ -75,12 +75,12 @@ public abstract class Movement implements Action<Board> {
 
     public abstract int getNewPosition();
 
-    public Chip getChip() {
-        return chip;
-    }
-
     private void bornNewMonkey(Board board, Queen queen) {
         board.addChip(new Monkey(queen.getOwner(), queen.getPosition()));
         queen.decraseSons();
+    }
+
+    public Chip getChip() {
+        return chip;
     }
 }

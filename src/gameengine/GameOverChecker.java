@@ -1,9 +1,9 @@
 package gameengine;
 
-import gameengine.model.Chip;
-import gameengine.model.Board;
-import gameengine.model.Queen;
 import core.ai.PlayersEnviroment;
+import gameengine.model.Board;
+import gameengine.model.Chip;
+import gameengine.model.Queen;
 import java.util.List;
 
 public class GameOverChecker {
@@ -18,6 +18,7 @@ public class GameOverChecker {
         if (wasQueenKilled(currentState)) return true;
         if (oponentHasNoLegalMovements(currentState)) return true;
         if (queenOfHeightTwoHasNoBabiesAndCantKill()) return true;
+        //if (queenOfCurrentPlayerDieInNextTurn(currentState)) return true;
         return false;
     }
 
@@ -40,5 +41,34 @@ public class GameOverChecker {
 
     private boolean areBothQueens(Chip firsChip, Chip secondChip) {
         return (firsChip instanceof Queen && secondChip instanceof Queen);
+    }
+
+    private boolean queenOfCurrentPlayerDieInNextTurn(Board board) {
+        int turnIndicator = toggelTurn(board.getTurnIndicator());
+        Queen currentPlayerQueen = getCurrentPlayerQueen(board, turnIndicator);
+        for (Chip chip : board.getChips())
+            if (!isCurrentPlayerChip(chip, turnIndicator))
+                if (canDieCurrentPlayerQueen(currentPlayerQueen, chip, board)) return true;
+        return false;
+    }
+
+    private Queen getCurrentPlayerQueen(Board board, int turnIndicator) {
+        return (Queen) board.getChips().get(turnIndicator);
+    }
+
+    private int toggelTurn(int turnIndicator) {
+        return (turnIndicator + 1) % 2;
+    }
+
+    private boolean isCurrentPlayerChip(Chip chip, int turnIndicator) {
+        return (chip.getOwner().getTurnIndicator() == turnIndicator);
+    }
+
+    private boolean canDieCurrentPlayerQueen(Queen myQueen, Chip chip, Board board) {
+        int colDiference = Math.abs(board.getCol(chip) - board.getCol(myQueen));
+        int rowDiference = Math.abs(board.getRow(chip) - board.getRow(myQueen));
+        if (colDiference == 2 && rowDiference == 1) return true;
+        if (colDiference == 1 && rowDiference == 2) return true;
+        return false;
     }
 }

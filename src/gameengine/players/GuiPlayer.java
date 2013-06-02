@@ -21,7 +21,7 @@ public class GuiPlayer extends Player {
     }
 
     @Override
-    public Board play(Board currentState, PlayersEnviroment enviroment) {
+    public Board playTurn(Board currentState, PlayersEnviroment enviroment) {
         try {
             List<Action> applicableActions = enviroment.getApplicableActions(currentState);
             int index = 0;
@@ -29,7 +29,7 @@ public class GuiPlayer extends Player {
             for (Iterator<Action> it = applicableActions.iterator(); it.hasNext();) {
                 Movement movement = (Movement) it.next();
                 Chip chip = movement.getChip();
-                System.out.println(index++ + ") " + chip.getPosition() + " to " + movementName(movement));
+                System.out.println(index++ + ") " + chip.getPosition() + " ID " + movementName(movement));
             }
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             String readLine = br.readLine();
