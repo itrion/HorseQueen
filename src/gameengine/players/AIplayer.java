@@ -1,10 +1,11 @@
 package gameengine.players;
 
 import core.ai.Action;
+import core.ai.InformedState;
 import core.ai.PlayersEnviroment;
+import core.ai.SearchMetrics;
 import core.ai.searches.MiniMax;
 import gameengine.model.Board;
-import gameengine.model.Movement;
 import gameengine.model.Player;
 import java.util.List;
 
@@ -14,20 +15,18 @@ public class AIplayer extends Player {
 
     public AIplayer(String name, int turnIndicator) {
         super(name, turnIndicator);
-        this.maxDepth = 5;
+        this.maxDepth = 6;
     }
 
     @Override
     public Board playTurn(Board currentState, PlayersEnviroment enviroment) {
         if (isFirstTurn(currentState)) return randomizeFirstTurn(currentState, enviroment);
-        System.out.println("Ai movements");
-        List<Action> applicableActions = enviroment.getApplicableActions(currentState);
-        for (Action action : applicableActions) {
-            String actionName = action.getClass().getName();
-            actionName = actionName.substring(actionName.lastIndexOf(".") + 1);
-            System.out.println(((Movement) action).getChip().getPosition() + " " + actionName);
-        }
-        return (Board) new MiniMax(new DefensiveHeuristic(), enviroment).searchNextState(currentState, maxDepth);
+        MiniMax miniMax = new MiniMax(new DefensiveHeuristic(), enviroment);
+        Board nextState = (Board) miniMax.searchNextState(currentState, maxDepth);
+        SearchMetrics searchMetrics = miniMax.getSearchMetrics();
+        System.out.println("search time: "+searchMetrics.getSearchTime());
+        System.out.println("nodes visited: "+searchMetrics.getStatesExpanded());
+        return nextState;
     }
 
     private boolean isFirstTurn(Board currentState) {

@@ -7,7 +7,6 @@ import core.ai.State;
 import gameengine.model.Board;
 import gameengine.model.Chip;
 import gameengine.model.Player;
-import gameengine.model.Queen;
 import gameengine.movements.MoveDownLeft;
 import gameengine.movements.MoveDownRight;
 import gameengine.movements.MoveLeftDown;
@@ -32,15 +31,8 @@ public class Game extends Observable implements PlayersEnviroment {
         this.players[0] = playerOne;
         this.players[1] = playerTwo;
         this.turnIndicator = 0;
-        this.board = createInitialBoard();
+        this.board = BoardFactory.getExperiment02(players, turnIndicator);
         this.gameOverChecker = new GameOverChecker(this);
-    }
-
-    private Board createInitialBoard() {
-        Board initialBoard = new Board(turnIndicator);
-        initialBoard.addChip(new Queen(players[0], 3));
-        initialBoard.addChip(new Queen(players[1], 60));
-        return initialBoard;
     }
 
     public void start() {

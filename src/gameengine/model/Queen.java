@@ -26,4 +26,8 @@ public class Queen extends Chip {
     public int getSons() {
         return sons;
     }
+
+    public void setSons(int sons) {
+        this.sons = sons;
+    }
 }
