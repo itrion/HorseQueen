@@ -1,6 +1,5 @@
 package gameengine.players;
 
-import gameengine.players.guiplayer.ChipSelectedListener;
 import core.ai.Action;
 import core.ai.PlayersEnviroment;
 import gameengine.model.Board;
@@ -11,6 +10,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import view.GameViewer;
 
 public class GuiPlayer extends Player {
@@ -28,7 +29,7 @@ public class GuiPlayer extends Player {
         List<Action> applicableActions = enviroment.getApplicableActions(currentState);
         for (Iterator<Action> it = applicableActions.iterator(); it.hasNext();) {
             Movement movement = (Movement) it.next();
-            if (selectedChip == movement.getChip()) {
+            if (selectedChip.getPosition() == movement.getChip().getPosition()) {
                 showTip(movement);
                 positions.put(movement.getNewPosition(), movement);
             }
@@ -41,7 +42,7 @@ public class GuiPlayer extends Player {
 
     private Chip getSelectedChip() {
         //TODO surely there will not be time to select the chip
-        return gameViewer.getLastClickedChip();
+        return gameViewer.getNextClickedChip();
     }
 
     private void showTip(Movement movement) {
@@ -49,7 +50,7 @@ public class GuiPlayer extends Player {
     }
 
     private int getSelectedPosition() {
-        return 18;
+        return gameViewer.getNextClickedPosition();
     }
 
     public void setGameViewer(GameViewer gameViewer) {
@@ -57,6 +58,6 @@ public class GuiPlayer extends Player {
     }
 
     private boolean validPosition(int selectedPosition, Map<Integer, Movement> positions) {
-        return true;
+        return positions.containsKey(selectedPosition);
     }
 }

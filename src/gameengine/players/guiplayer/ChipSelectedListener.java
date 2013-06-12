@@ -1,7 +1,7 @@
 package gameengine.players.guiplayer;
 
-import gameengine.model.Chip;
+import view.ChipViewer;
 
 public interface ChipSelectedListener {
-    public void chipSelected(Chip chip);
+    public void chipSelected(ChipViewer chipViewer);
 }

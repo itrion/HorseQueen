@@ -51,9 +51,7 @@ public class ChipViewer extends JPanel implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent me) {
-        System.out.println("clickedON " + index);
-        if (chip != null)
-            chipSelectedListener.chipSelected(chip);
+        chipSelectedListener.chipSelected(this);
     }
 
     @Override
@@ -70,5 +68,17 @@ public class ChipViewer extends JPanel implements MouseListener {
 
     @Override
     public void mouseExited(MouseEvent me) {
+    }
+
+    public void fill() {
+        setBackground(Color.cyan);
+    }
+
+    public Chip getChip() {
+        return chip;
+    }
+
+    public int getIndex() {
+        return index;
     }
 }

@@ -30,8 +30,7 @@ public class BoardViewer extends JPanel {
     }
 
     void paintTile(int tilePosition) {
-        ChipViewer chipViewer = (ChipViewer) getComponent(tilePosition);
-        chipViewer.setBackground(Color.white);
+        ((ChipViewer) getComponent(tilePosition)).fill();
     }
 
     public List<ChipViewer> getChipViewers() {

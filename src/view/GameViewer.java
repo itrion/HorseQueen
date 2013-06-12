@@ -4,11 +4,11 @@ import gameengine.Game;
 import gameengine.model.Board;
 import gameengine.model.Chip;
 import gameengine.players.guiplayer.ChipSelectedListener;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.event.MouseListener;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -16,8 +16,9 @@ public class GameViewer extends JFrame implements Observer, ChipSelectedListener
 
     private Game game;
     private JPanel boardPanel;
-    private Chip lastClickedChip;
+    private Chip nextClickedChip;
     private BoardViewer boardViewer;
+    private int nextPositionClick;
 
     public GameViewer(Game game) {
         this.game = game;
@@ -45,38 +46,41 @@ public class GameViewer extends JFrame implements Observer, ChipSelectedListener
     }
 
     private void drawBoard(Board board) {
-        removeAllMouseListeners();
         boardPanel.removeAll();
         boardViewer = null;
         boardViewer = new BoardViewer(board, this);
-        addAllMouseListeners(boardViewer);
         boardPanel.add(boardViewer);
         boardPanel.revalidate();
         boardPanel.repaint();
     }
 
     @Override
-    public void chipSelected(Chip chip) {
-        this.lastClickedChip = chip;
+    public void chipSelected(ChipViewer chipViewer) {
+        this.nextClickedChip = chipViewer.getChip();
+        this.nextPositionClick = chipViewer.getIndex();
     }
 
-    public Chip getLastClickedChip() {
-        while (lastClickedChip == null);
-        return lastClickedChip;
+    public Chip getNextClickedChip() {
+        nextClickedChip = null;
+        while (nextClickedChip == null) waitForCLick();
+        return nextClickedChip;
+    }
+
+    public int getNextClickedPosition() {
+        nextPositionClick = -1;
+        while (nextPositionClick < 0) waitForCLick();
+        return nextPositionClick;
     }
 
     public void paintTile(int tilePosition) {
         boardViewer.paintTile(tilePosition);
     }
 
-    private void removeAllMouseListeners() {
-        for (MouseListener mouseListener : getMouseListeners())
-            removeMouseListener(mouseListener);
-    }
-
-    private void addAllMouseListeners(BoardViewer boardViewer) {
-        for (ChipViewer chipViewer : boardViewer.getChipViewers()) {
-            addMouseListener(chipViewer);
+    private void waitForCLick() {
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(GameViewer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
