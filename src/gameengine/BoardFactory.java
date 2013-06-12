@@ -36,6 +36,12 @@ public class BoardFactory {
         putMonkeysOfPlayer(players[1], playerTwoMonkeyPositions, initialBoard);
         return initialBoard;
     }
+    
+    public static Board getInitialState(Player[] players, int turnIndicator){
+        Board initialBoard = new Board(turnIndicator);
+        putQueens(players, initialBoard, new QueenParameters(3, 10), new QueenParameters(60, 10));
+        return initialBoard;
+    }
 
     private static void putQueens(Player[] players, Board initialBoard, QueenParameters queenAParameters, QueenParameters queenBParameters) {
         Queen queenPlayerA = new Queen(players[0], queenAParameters.position);

@@ -31,7 +31,7 @@ public class Game extends Observable implements PlayersEnviroment {
         this.players[0] = playerOne;
         this.players[1] = playerTwo;
         this.turnIndicator = 0;
-        this.board = BoardFactory.getExperiment02(players, turnIndicator);
+        this.board = BoardFactory.getInitialState(players, turnIndicator);
         this.gameOverChecker = new GameOverChecker(this);
     }
 
