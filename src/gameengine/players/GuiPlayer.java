@@ -1,20 +1,21 @@
 package gameengine.players;
 
+import gameengine.players.guiplayer.ChipSelectedListener;
 import core.ai.Action;
 import core.ai.PlayersEnviroment;
 import gameengine.model.Board;
 import gameengine.model.Chip;
 import gameengine.model.Movement;
 import gameengine.model.Player;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Map;
+import view.GameViewer;
 
 public class GuiPlayer extends Player {
+
+    private GameViewer gameViewer;
 
     public GuiPlayer(String name, int turnIndicator) {
         super(name, turnIndicator);
@@ -22,26 +23,40 @@ public class GuiPlayer extends Player {
 
     @Override
     public Board playTurn(Board currentState, PlayersEnviroment enviroment) {
-        try {
-            List<Action> applicableActions = enviroment.getApplicableActions(currentState);
-            int index = 0;
-            System.out.println("Chose movement");
-            for (Iterator<Action> it = applicableActions.iterator(); it.hasNext();) {
-                Movement movement = (Movement) it.next();
-                Chip chip = movement.getChip();
-                System.out.println(index++ + ") " + chip.getPosition() + " ID " + movementName(movement));
+        Chip selectedChip = getSelectedChip();
+        Map<Integer, Movement> positions = new HashMap<>();
+        List<Action> applicableActions = enviroment.getApplicableActions(currentState);
+        for (Iterator<Action> it = applicableActions.iterator(); it.hasNext();) {
+            Movement movement = (Movement) it.next();
+            if (selectedChip == movement.getChip()) {
+                showTip(movement);
+                positions.put(movement.getNewPosition(), movement);
             }
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            String readLine = br.readLine();
-            return (Board) applicableActions.get(Integer.valueOf(readLine)).execute(currentState);
-        } catch (IOException ex) {
-            Logger.getLogger(GuiPlayer.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
+        int selectedPosition = -1;
+        while (!validPosition(selectedPosition, positions))
+            selectedPosition = getSelectedPosition();
+        return positions.get(selectedPosition).execute(currentState);
     }
 
-    private String movementName(Movement movement) {
-        String name = movement.getClass().getName();
-        return name.substring(name.lastIndexOf(".") + 1);
+    private Chip getSelectedChip() {
+        //TODO surely there will not be time to select the chip
+        return gameViewer.getLastClickedChip();
+    }
+
+    private void showTip(Movement movement) {
+        gameViewer.paintTile(movement.getNewPosition());
+    }
+
+    private int getSelectedPosition() {
+        return 18;
+    }
+
+    public void setGameViewer(GameViewer gameViewer) {
+        this.gameViewer = gameViewer;
+    }
+
+    private boolean validPosition(int selectedPosition, Map<Integer, Movement> positions) {
+        return true;
     }
 }

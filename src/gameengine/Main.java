@@ -14,9 +14,10 @@ public class Main {
 
     private void execute() {
         Player playerOne = new AIplayer("Mark Steere", 0);
-        Player playerTwo = new GuiPlayer("Johan", 1);
+        GuiPlayer playerTwo = new GuiPlayer("Johan", 1);
         Game game = new Game(playerOne, playerTwo);
         GameViewer gameViewer = new GameViewer(game);
+        playerTwo.setGameViewer(gameViewer);
         gameViewer.view();
         game.start();
     }
