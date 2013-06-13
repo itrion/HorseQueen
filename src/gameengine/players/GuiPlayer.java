@@ -6,12 +6,11 @@ import gameengine.model.Board;
 import gameengine.model.Chip;
 import gameengine.model.Movement;
 import gameengine.model.Player;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import view.GameViewer;
 
 public class GuiPlayer extends Player {
@@ -24,19 +23,26 @@ public class GuiPlayer extends Player {
 
     @Override
     public Board playTurn(Board currentState, PlayersEnviroment enviroment) {
-        Chip selectedChip = getSelectedChip();
         Map<Integer, Movement> positions = new HashMap<>();
-        List<Action> applicableActions = enviroment.getApplicableActions(currentState);
-        for (Iterator<Action> it = applicableActions.iterator(); it.hasNext();) {
-            Movement movement = (Movement) it.next();
-            if (selectedChip.getPosition() == movement.getChip().getPosition()) {
-                showTip(movement);
-                positions.put(movement.getNewPosition(), movement);
-            }
-        }
+        ArrayList<Integer> tips = new ArrayList<>();
         int selectedPosition = -1;
-        while (!validPosition(selectedPosition, positions))
+        while (true) {
+            Chip selectedChip = getSelectedChip();
+            List<Action> applicableActions = enviroment.getApplicableActions(currentState);
+            for (Iterator<Action> it = applicableActions.iterator(); it.hasNext();) {
+                Movement movement = (Movement) it.next();
+                if (selectedChip.getPosition() == movement.getChip().getPosition()) {
+                    showTip(movement);
+                    tips.add(movement.getNewPosition());
+                    positions.put(movement.getNewPosition(), movement);
+                }
+            }
             selectedPosition = getSelectedPosition();
+            if (!validPosition(selectedPosition, positions)) {
+                cleanTips(tips);
+                continue;
+            } else break;
+        }
         return positions.get(selectedPosition).execute(currentState);
     }
 
@@ -59,5 +65,11 @@ public class GuiPlayer extends Player {
 
     private boolean validPosition(int selectedPosition, Map<Integer, Movement> positions) {
         return positions.containsKey(selectedPosition);
+    }
+
+    private void cleanTips(List<Integer> tips) {
+        for (Integer tip : tips) {
+            gameViewer.cleanTile(tip);
+        }
     }
 }

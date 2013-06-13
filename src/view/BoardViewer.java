@@ -40,4 +40,8 @@ public class BoardViewer extends JPanel {
         }
         return chipViewers;
     }
+
+    void cleanTile(Integer tile) {
+        ((ChipViewer) getComponent(tile)).clean();
+    }
 }

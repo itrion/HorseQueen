@@ -14,7 +14,7 @@ public class DefensiveHeuristic implements Heuristic<Board> {
         int turnIndicator = toggelTurn(board.getTurnIndicator());
         if (isMyQueenDead(board, turnIndicator)) return -Double.MAX_VALUE;
         if (isOtherQueenDead(board, turnIndicator)) return Double.MAX_VALUE;
-        if (myQueenhasLessThanFourSons(board, turnIndicator)) return -Double.MAX_VALUE;
+        //if (myQueenhasLessThanFourSons(board, turnIndicator)) return -Double.MAX_VALUE;
         return chipDiference(board, turnIndicator) - chipsWhichCanDie(board, turnIndicator);
     }
 

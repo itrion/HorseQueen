@@ -83,4 +83,8 @@ public class GameViewer extends JFrame implements Observer, ChipSelectedListener
             Logger.getLogger(GameViewer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public void cleanTile(Integer tile) {
+        boardViewer.cleanTile(tile);
+    }
 }

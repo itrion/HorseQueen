@@ -16,6 +16,7 @@ public class ChipViewer extends JPanel implements MouseListener {
     private Chip chip;
     private ChipSelectedListener chipSelectedListener;
     private int index;
+    private Color color;
 
     public ChipViewer(Chip chip, ChipSelectedListener chipSelectedListener, int index) {
         this.chip = chip;
@@ -28,10 +29,11 @@ public class ChipViewer extends JPanel implements MouseListener {
         addMouseListener(this);
         setPreferredSize(new Dimension(60, 60));
         setBorder(new LineBorder(Color.BLACK));
+        color = getBackground();
         if (chip == null) return;
         if (chip instanceof Queen) drawQueen();
         else drawMonkey();
-        Color color = Color.decode("#D2B58D");
+        color = Color.decode("#D2B58D");
         if (chip.getOwner().getTurnIndicator() == 0)
             color = Color.decode("#FAEED8");
         setBackground(color);
@@ -80,5 +82,9 @@ public class ChipViewer extends JPanel implements MouseListener {
 
     public int getIndex() {
         return index;
+    }
+
+    void clean() {
+        setBackground(color);
     }
 }

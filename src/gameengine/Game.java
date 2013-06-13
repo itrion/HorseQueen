@@ -37,10 +37,12 @@ public class Game extends Observable implements PlayersEnviroment {
 
     public void start() {
         while (true) {
+            System.out.println("Let me thing");
             board = playNextTurn(board);
             notifyChangeInBoard();
             if (gameOverChecker.check(board)) break;
             toggleTurn();
+            System.out.println("your turn");
             board = playNextTurn(board);
             notifyChangeInBoard();
             if (gameOverChecker.check(board)) break;
